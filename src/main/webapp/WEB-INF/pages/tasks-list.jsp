@@ -17,11 +17,12 @@
         <th colspan="3">Operation</th>
     </tr>
     <%
+        int counter = 0;
         for(Task task : (List<Task>) request.getAttribute("tasks")) {
-
+            counter++;
     %>
     <tr>
-        <td><%=task.getId()%></td>
+        <td><%=counter%></td>
         <td><%=task.getTitle()%></td>
         <td><%=task.getPriority()%></td>
         <td>
