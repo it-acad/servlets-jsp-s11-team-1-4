@@ -25,7 +25,15 @@ public class ReadTaskServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/read-task.jsp");
         Task task = taskRepository.read(Integer.parseInt(request.getParameter("id")));
-        request.setAttribute("task", task);
-        requestDispatcher.forward(request, response);
+        if(task!=null) {
+            request.setAttribute("task", task);
+            requestDispatcher.forward(request, response);
+		}
+		else {
+			requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/error-page.jsp");
+			request.setAttribute("id", request.getParameter("id"));
+			request.setAttribute("url", "/read-task");
+			requestDispatcher.forward(request, response);
+		}
     }
 }

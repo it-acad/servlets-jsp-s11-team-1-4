@@ -26,8 +26,18 @@ public class EditTaskServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/edit-task.jsp");
 		taskForUpdating = taskRepository.read(Integer.parseInt(request.getParameter("id")));
-        request.setAttribute("task", taskForUpdating);
-        requestDispatcher.forward(request, response);
+		if(taskForUpdating!=null) {
+		    request.setAttribute("task", taskForUpdating);
+		    requestDispatcher.forward(request, response);
+		}
+		else {
+			requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/error-page.jsp");
+			request.setAttribute("id", request.getParameter("id"));
+			request.setAttribute("url", "/edit-task");
+			requestDispatcher.forward(request, response);
+		}
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
